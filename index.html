@@ -557,11 +557,62 @@ footer span{color:var(--rose-light)}
 .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s,transform .7s}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
+/* ── chat toggle arrow ── */
+.tc-toggle-btn{
+  background:none;border:none;cursor:pointer;
+  color:rgba(244,160,181,.55);
+  font-size:18px;line-height:1;padding:0 0 0 6px;
+  transition:color .2s, transform .3s;
+  flex-shrink:0;
+}
+.tc-toggle-btn:hover{color:var(--pink)}
+
+/* when chat is hidden: wrap collapses to just a ghost pill */
+#twitch-wrap.chat-hidden .tc-panel{display:none}
+#twitch-wrap.chat-hidden .tc-scroll-btn{display:none!important}
+#twitch-wrap.chat-hidden{
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .4s;
+}
+#twitch-wrap.chat-hidden:hover,
+#twitch-wrap.chat-hidden:focus-within,
+#twitch-wrap.chat-hidden.touch-active{
+  opacity:1;
+  pointer-events:auto;
+}
+/* ghost pill shown instead of full panel */
+#tc-ghost-btn{
+  display:none;
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  background:rgba(244,160,181,.07);
+  border:1px solid rgba(244,160,181,.12);
+  border-radius:50px;
+  padding:8px 14px;
+  color:rgba(244,160,181,.35);
+  font-size:11px;letter-spacing:1.5px;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+  backdrop-filter:blur(6px);
+  opacity:0;
+  transition:opacity .35s;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+#tc-ghost-btn.visible{
+  display:block;
+  pointer-events:auto;
+}
+#tc-ghost-btn.visible:hover,
+#tc-ghost-btn.visible.touch-active{opacity:1}
+
 @media(max-width:768px){
   section{padding:70px 20px}
   nav{padding:12px 16px}.nav-links{gap:12px}
   .nav-links a{font-size:10px}
   #twitch-wrap{width:220px;right:8px;bottom:8px}
+  #tc-ghost-btn{bottom:8px;right:8px}
   .slide-arrow.prev{left:-16px}.slide-arrow.next{right:-16px}
   .slide-arrow{width:38px;height:38px}
   .mem-grid{grid-template-columns:repeat(2,1fr)}
@@ -600,6 +651,7 @@ footer span{color:var(--rose-light)}
       <div class="tc-channel-name">intisar's bday 🌹</div>
       <div class="tc-viewers">👁 <span id="tc-viewer-count">247</span></div>
       <div class="tc-badge">LIVE</div>
+      <button class="tc-toggle-btn" id="tc-toggle-btn" onclick="toggleChat()" title="Hide chat">&#8964;</button>
     </div>
     <div class="tc-body" id="chat-body"></div>
     <div class="tc-footer">
@@ -609,6 +661,8 @@ footer span{color:var(--rose-light)}
   </div>
   <button class="tc-scroll-btn" id="tc-scroll-btn" onclick="resumeAutoScroll()">↓ new messages</button>
 </div>
+<!-- ghost restore button (visible only when chat is hidden) -->
+<button id="tc-ghost-btn" onclick="toggleChat()" title="Show chat">💬</button>
 
 <nav>
   <div class="nav-name">✦ Intisar ✦</div>
@@ -983,74 +1037,74 @@ footer span{color:var(--rose-light)}
 
 // ── MEMORIES grid — exact filenames, in card order ─────────
 const MEM_IMGS = [
-  'friends(1).jpg',    // 0 art gallery wide shot
-  'friends(2).jpg',    // 1 palace mirror selfie
-  'friends(3).jpg',   // 2 red thread installation
-  'friends(4).jpg',   // 3 polaroid street style
-  'friends(5).jpg',   // 4 gallery 2
-  'friends(6).jpg',   // 5 istanbul rooftop view
-  'friends(7).jpg',   // 6 gold mirror selfie
-  'friends(8).jpg',   // 7 world map two girls
-  'friends(9).jpeg',  // 8 mirror selfie baddies
-  'friends(10).jpeg',  // 9 rooftop dinner
+  'friends(1).jpg',    
+  'friends(2).jpg',    
+  'friends(3).jpg',   
+  'friends(4).jpg',  
+  'friends(5).jpg',   
+  'friends(6).jpg',   
+  'friends(7).jpg',   
+  'friends(8).jpg',   
+  'friends(9).jpeg', 
+  'friends(10).jpeg',  
 ];
 
 // per-image object-position for best face framing (memories)
 const MEM_POS = [
   'center 30%',  // 0 art gallery
-  'center 25%',  // 1 mirror selfie
-  'center 20%',  // 2 red threads
-  'center 30%',  // 3 polaroid
-  'center 25%',  // 4 gallery 2
-  'center 40%',  // 5 istanbul view
-  'center 25%',  // 6 gold mirror
-  'center 35%',  // 7 world map
-  'center 30%',  // 8 mirror baddies
-  'center 35%',  // 9 rooftop dinner
+  'center 25%',  
+  'center 20%',  
+  'center 30%',  
+  'center 25%',  
+  'center 40%', 
+  'center 25%',  
+  'center 35%', 
+  'center 30%',  
+  'center 35%',  
 ];
 
 // captions matching each memory photo
 const MEM_CAPTIONS = [
-  'art world 🎨',
-  'palace nights ✨',
-  'red threads 🌹',
-  'film days 📷',
-  'gallery glow ✦',
-  'istanbul 🌇',
-  'golden mirror ✦',
-  'world travelers 🌍',
-  'mirror baddies 🖤',
-  'rooftop dinner 🌙',
+  'BESTIE 🌹🌹',
+  'Night out ✨',
+  'CUTSIES 🌹',
+  'DAY ONES 📷',
+  'goofballs ✦',
+  'nostalgic 💜',
+  '⭐⭐⭐⭐',
+  'yappers 💕',
+  'my new fav 🖤',
+  'closer & warmer 🌙',
 ];
 
 // ── ABSOLUTE BADDIE slideshow — 11 photos (no baddie__7_) ──
 const BADDIE_IMGS = [
-  'baddie(1).jpg',   // 1  skyline sequin dress
-  'baddie(2).jpg',   // 2  rooftop lounge purple
-  'baddie(3).jpg',   // 3  palace garden night
-  'baddie(4).jpg',   // 4  skyline wide shot
-  'baddie(5).jpg',   // 5  flower bouquet restaurant
-  'baddie(6).jpg',   // 6  Gina restaurant
-  'baddie(8).jpg',   // 8  palace pink night
-  'baddie(9).jpg',   // 9  art gallery leather
-  'baddie(10).jpg',  // 10 golden profile close-up
-  'baddie(11).jpg',  // 11 sunglasses café
-  'baddie(12).jpg',  // 12 restaurant red lip
+  'baddie(1).jpg',   
+  'baddie(2).jpg',  
+  'baddie(3).jpg',   
+  'baddie(4).jpg',   
+  'baddie(5).jpg',  
+  'baddie(6).jpg',   
+  'baddie(8).jpg',   
+  'baddie(9).jpg',   
+  'baddie(10).jpg',  
+  'baddie(11).jpg',  
+  'baddie(12).jpg', 
 ];
 
 // per-image object-position for baddie slideshow
 const BADDIE_POS = [
-  'center 20%',  // 1 sequin dress — face upper
-  'center 25%',  // 2 purple rooftop
-  'center 20%',  // 3 palace garden
-  'center 20%',  // 4 skyline wide
-  'center 25%',  // 5 flower bouquet
-  'center 20%',  // 6 Gina restaurant
-  'center 20%',  // 8 palace pink
-  'center 25%',  // 9 art gallery
-  'center 35%',  // 10 golden profile (landscape)
-  'center 25%',  // 11 sunglasses
-  'center 35%',  // 12 restaurant (landscape)
+  'center 20%',  
+  'center 25%', 
+  'center 20%',  
+  'center 20%',  
+  'center 25%',  
+  'center 20%', 
+  'center 20%',  
+  'center 25%',  
+  'center 35%',  
+  'center 25%',  
+  'center 35%',  
 ];
 
 // ── Lightbox state ─────────────────────────────────────────
@@ -1528,5 +1582,40 @@ reasonEls.forEach((el,i)=>{el.style.transitionDelay=(i*0.12)+'s';rro.observe(el)
 const tlEls=document.querySelectorAll('.tl-item');
 const tlro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');tlro.unobserve(e.target);}});},{threshold:0.1});
 tlEls.forEach((el,i)=>{el.style.transitionDelay=(i*0.15)+'s';tlro.observe(el);});
+
+/* ── chat toggle ── */
+(function(){
+  const wrap=document.getElementById('twitch-wrap');
+  const ghost=document.getElementById('tc-ghost-btn');
+  const btn=document.getElementById('tc-toggle-btn');
+
+  function showGhost(){
+    ghost.classList.add('visible');
+    // brief touch flicker so mobile user sees it then it fades
+    clearTimeout(ghost._fadeTimer);
+    ghost.classList.add('touch-active');
+    ghost._fadeTimer=setTimeout(()=>ghost.classList.remove('touch-active'),1800);
+  }
+  function hideGhost(){
+    ghost.classList.remove('visible','touch-active');
+  }
+
+  window.toggleChat=function(){
+    const hidden=wrap.classList.toggle('chat-hidden');
+    if(hidden){
+      // rotate arrow up → the ghost appears
+      showGhost();
+    } else {
+      hideGhost();
+    }
+  };
+
+  // touch-tap on ghost: reveal chat
+  ghost.addEventListener('touchstart',()=>{ghost.classList.add('touch-active');},{passive:true});
+  ghost.addEventListener('touchend',()=>{
+    clearTimeout(ghost._fadeTimer);
+    ghost._fadeTimer=setTimeout(()=>ghost.classList.remove('touch-active'),600);
+  },{passive:true});
+})();
 
 </script>
