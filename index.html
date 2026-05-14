@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -992,6 +992,14 @@ footer span{color:var(--rose-light)}
     <div class="mem-card wide" onclick="openLightbox(9)">
       <div class="mem-card-overlay"><div class="mem-caption">closer & warmer🌙</div></div>
     </div>
+    <!-- 10: friends_11_.jpeg — wedding hug in yellow -->
+    <div class="mem-card" onclick="openLightbox(10)">
+      <div class="mem-card-overlay"><div class="mem-caption">sunshine sisters 🌻</div></div>
+    </div>
+    <!-- 11: friends_12_.jpeg — world map cafe -->
+    <div class="mem-card" onclick="openLightbox(11)">
+      <div class="mem-card-overlay"><div class="mem-caption">always side by side 🫂</div></div>
+    </div>
   </div>
 </section>
 
@@ -1037,74 +1045,80 @@ footer span{color:var(--rose-light)}
 
 // ── MEMORIES grid — exact filenames, in card order ─────────
 const MEM_IMGS = [
-  'friends(1).jpg',    
-  'friends(2).jpg',    
-  'friends(3).jpg',   
-  'friends(4).jpg',  
-  'friends(5).jpg',   
-  'friends(6).jpg',   
-  'friends(7).jpg',   
-  'friends(8).jpg',   
-  'friends(9).jpeg', 
-  'friends(10).jpeg',  
+  'friends(1).jpg',    // 0 art gallery wide shot
+  'friends(2).jpg',    // 1 palace mirror selfie
+  'friends(3).jpg',   // 2 red thread installation
+  'friends(4).jpg',   // 3 polaroid street style
+  'friends(5).jpg',   // 4 gallery 2
+  'friends(6).jpg',   // 5 istanbul rooftop view
+  'friends(7).jpg',   // 6 gold mirror selfie
+  'friends(8).jpg',   // 7 world map two girls
+  'friends(9).jpeg',  // 8 mirror selfie baddies
+  'friends(10).jpeg',  // 9 rooftop dinner
+  'friends(11).jpeg', // 10 wedding hug yellow
+  'friends(12).jpeg', // 11 world map cafe
 ];
 
 // per-image object-position for best face framing (memories)
 const MEM_POS = [
   'center 30%',  // 0 art gallery
-  'center 25%',  
-  'center 20%',  
-  'center 30%',  
-  'center 25%',  
-  'center 40%', 
-  'center 25%',  
-  'center 35%', 
-  'center 30%',  
-  'center 35%',  
+  'center 25%',  // 1 mirror selfie
+  'center 20%',  // 2 red threads
+  'center 30%',  // 3 polaroid
+  'center 25%',  // 4 gallery 2
+  'center 40%',  // 5 istanbul view
+  'center 25%',  // 6 gold mirror
+  'center 35%',  // 7 world map
+  'center 30%',  // 8 mirror baddies
+  'center 35%',  // 9 rooftop dinner
+  'center 25%',  // 10 wedding hug yellow
+  'center 30%',  // 11 world map cafe
 ];
 
 // captions matching each memory photo
 const MEM_CAPTIONS = [
   'BESTIE 🌹🌹',
-  'Night out ✨',
-  'CUTSIES 🌹',
-  'DAY ONES 📷',
-  'goofballs ✦',
-  'nostalgic 💜',
-  '⭐⭐⭐⭐',
-  'yappers 💕',
-  'my new fav 🖤',
-  'closer & warmer 🌙',
+  'nights out ✨',
+  'cutsies 🌹',
+  'film days 📷',
+  'gallery glow ✦',
+  'istanbul 🌇',
+  'golden mirror ✦',
+  'world travelers 🌍',
+  'mirror baddies 🖤',
+  'rooftop dinner 🌙',
+  'making more memories 🌻',
+  'always side by side 🫂 ',
 ];
 
 // ── ABSOLUTE BADDIE slideshow — 11 photos (no baddie__7_) ──
 const BADDIE_IMGS = [
-  'baddie(1).jpg',   
-  'baddie(2).jpg',  
-  'baddie(3).jpg',   
-  'baddie(4).jpg',   
-  'baddie(5).jpg',  
-  'baddie(6).jpg',   
-  'baddie(8).jpg',   
-  'baddie(9).jpg',   
-  'baddie(10).jpg',  
-  'baddie(11).jpg',  
-  'baddie(12).jpg', 
+  'baddie(1).jpg',   // 1  skyline sequin dress
+  'baddie(2).jpg',   // 2  rooftop lounge purple
+  'baddie(3).jpg',   // 3  palace garden night
+  'baddie(4).jpg',   // 4  skyline wide shot
+  'baddie(5).jpg',   // 5  flower bouquet restaurant
+  'baddie(6).jpg',   // 6  Gina restaurant
+  'baddie(8).jpg',   // 8  palace pink night
+  'baddie(9).jpg',   // 9  art gallery leather
+  'baddie(10).jpg',  // 10 golden profile close-up
+  'baddie(11).jpg',  // 11 sunglasses café
+  'baddie(12).jpg',  // 12 restaurant red lip
 ];
 
 // per-image object-position for baddie slideshow
 const BADDIE_POS = [
-  'center 20%',  
-  'center 25%', 
-  'center 20%',  
-  'center 20%',  
-  'center 25%',  
-  'center 20%', 
-  'center 20%',  
-  'center 25%',  
-  'center 35%',  
-  'center 25%',  
-  'center 35%',  
+  'center 20%',  // 1 sequin dress — face upper
+  'center 25%',  // 2 purple rooftop
+  'center 20%',  // 3 palace garden
+  'center 20%',  // 4 skyline wide
+  'center 25%',  // 5 flower bouquet
+  'center 20%',  // 6 Gina restaurant
+  'center 20%',  // 8 palace pink
+  'center 25%',  // 9 art gallery
+  'center 35%',  // 10 golden profile (landscape)
+  'center 25%',  // 11 sunglasses
+  'center 35%',  // 12 restaurant (landscape)
 ];
 
 // ── Lightbox state ─────────────────────────────────────────
