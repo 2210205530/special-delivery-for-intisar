@@ -1004,6 +1004,14 @@ footer span{color:var(--rose-light)}
     <div class="mem-card wide" onclick="openLightbox(12)">
       <div class="mem-card-overlay"><div class="mem-caption">always having fun 💛</div></div>
     </div>
+    <!-- 13: friends_14_.jpeg — street selfie sideways -->
+    <div class="mem-card" onclick="openLightbox(13)">
+      <div class="mem-card-overlay"><div class="mem-caption">making memories 🌺</div></div>
+    </div>
+    <!-- 14: friends_15_.jpeg — escalator selfie -->
+    <div class="mem-card" onclick="openLightbox(14)">
+      <div class="mem-card-overlay"><div class="mem-caption">look best together🚇</div></div>
+    </div>
   </div>
 </section>
 
@@ -1062,6 +1070,8 @@ const MEM_IMGS = [
   'friends(11).jpeg', // 10 wedding hug yellow
   'friends(12).jpeg', // 11 world map cafe
   'friends(13).jpeg', // 12 mirror group selfie
+  'friends(14).jpeg', // 13 street selfie sideways
+  'friends(15).jpeg', // 14 escalator selfie
 ];
 
 // per-image object-position for best face framing (memories)
@@ -1078,7 +1088,9 @@ const MEM_POS = [
   'center 35%',  // 9 rooftop dinner
   'center 25%',  // 10 wedding hug yellow
   'center 30%',  // 11 world map cafe
-  'center 45%',  // 12 mirror group selfie
+  'center 25%',  // 12 mirror group selfie
+  'center 40%',  // 13 street selfie (rotated, faces are mid-frame)
+  'center 55%',  // 14 escalator selfie (faces lower half)
 ];
 
 // captions matching each memory photo
@@ -1096,6 +1108,8 @@ const MEM_CAPTIONS = [
   'sunshine sisters 🌻',
   'always side by side 🫂',
   'always having fun 💛',
+  'making memories 🌺',
+  'look best together🚇',
 ];
 
 // ── ABSOLUTE BADDIE slideshow — 11 photos (no baddie__7_) ──
